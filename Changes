@@ -1,0 +1,13 @@
+Revision history for Perl extension Test::UseAllModules.
+
+0.04  2006/07/26
+  - renamed from Test::Use (brian d foy's advice)
+
+0.03  2006/07/25
+  - now tests will be bailed out if Test::Use test should fail.
+
+0.02  2006/07/24
+  - oops. forgot to modify Makefile.PL
+
+0.01  2006/07/24
+  - initial release
