@@ -4,6 +4,10 @@ MANIFEST
 README
 lib/Test/UseAllModules.pm
 t/01_load.t
+t/02_no_pm.t
+t/03_no_manifest.t
 t/99_pod.t
 t/99_podcoverage.t
+t/NoPM/MANIFEST
+t/NoMANIFEST/lib/NeverTested.pm
 META.yml                                 Module meta-data (added by MakeMaker)

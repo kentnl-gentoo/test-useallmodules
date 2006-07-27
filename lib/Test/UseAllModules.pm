@@ -3,7 +3,7 @@ package Test::UseAllModules;
 use strict;
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Exporter;
 
@@ -17,6 +17,11 @@ sub all_uses_ok {
 
   my @exceptions = @_;
   my @modules;
+
+  unless (-f 'MANIFEST') {
+    plan skip_all => 'no MANIFEST';
+    exit;
+  }
 
   open my $fh, '<', 'MANIFEST';
 READ:
@@ -35,7 +40,7 @@ READ:
   close $fh;
 
   unless (@modules) {
-    plan skip_all => 'no pm files found under the lib directory';
+    plan skip_all => 'no .pm files are found under the lib directory';
     exit;
   }
   plan tests => scalar @modules;
