@@ -1,6 +1,9 @@
 Revision history for Perl extension Test::UseAllModules.
 
 0.05  2006/07/27
+  - skip_all if no pm files found under the lib directory. (Tatsuhiko Miyagawa's advice)
+
+0.05  2006/07/27
   - failed to parse MANIFEST on *nix. (Tatsuhiko Miyagawa's report)
 
 0.04  2006/07/26
