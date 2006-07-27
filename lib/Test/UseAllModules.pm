@@ -3,7 +3,7 @@ package Test::UseAllModules;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use Exporter;
 
@@ -21,6 +21,7 @@ sub all_uses_ok {
   open my $fh, '<', 'MANIFEST';
 READ:
   while(my $file = <$fh>) {
+    chomp $file;
     if (my ($module) = $file =~ m|^lib/(.*)\.pm$|) {
       $module =~ s|/|::|g;
 
