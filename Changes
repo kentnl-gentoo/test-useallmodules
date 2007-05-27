@@ -1,5 +1,10 @@
 Revision history for Perl extension Test::UseAllModules.
 
+0.08  2007/05/27
+  - maintenance release: no significant code changes
+  - added license info to Makefile.PL
+  - updated META.yml version
+
 0.07  2006/07/27
   - skip_all if no MANIFEST should be found.
   - added two tests to see if all_uses_ok skips properly.
