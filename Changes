@@ -1,5 +1,8 @@
 Revision history for Perl extension Test::UseAllModules.
 
+0.09  2007/11/28
+  - added ExtUtils::Manifest dependency
+
 0.08  2007/05/27
   - maintenance release: no significant code changes
   - added license info to Makefile.PL

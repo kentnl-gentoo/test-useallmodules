@@ -1,11 +1,13 @@
 --- #YAML:1.0
 name:                Test-UseAllModules
-version:             0.08
+version:             0.09
 abstract:            do use_ok() for all modules MANIFESTed
 license:             perl
-generated_by:        ExtUtils::MakeMaker version 6.32
+generated_by:        ExtUtils::MakeMaker version 6.36
 distribution_type:   module
 requires:     
+    Exporter:                      0
+    ExtUtils::Manifest:            0
     Test::More:                    0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.2.html

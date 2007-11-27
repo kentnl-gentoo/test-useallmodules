@@ -2,8 +2,9 @@ package Test::UseAllModules;
 
 use strict;
 use warnings;
+use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use Exporter;
 
@@ -23,11 +24,11 @@ sub all_uses_ok {
     exit;
   }
 
-  open my $fh, '<', 'MANIFEST';
+  my $manifest = maniread();
+
 READ:
-  while(my $file = <$fh>) {
-    chomp $file;
-    if (my ($module) = $file =~ m|^lib/(.*)\.pm$|) {
+  foreach my $file (keys %{ $manifest }) {
+    if (my ($module) = $file =~ m|^lib/(.*)\.pm\s*$|) {
       $module =~ s|/|::|g;
 
       foreach my $rule (@exceptions) {
@@ -37,7 +38,6 @@ READ:
       push @modules, $module;
     }
   }
-  close $fh;
 
   unless (@modules) {
     plan skip_all => 'no .pm files are found under the lib directory';
