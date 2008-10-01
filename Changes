@@ -1,5 +1,10 @@
 Revision history for Perl extension Test::UseAllModules.
 
+0.09_01 2008/10/01
+  - this is a dev release to see how PAUSE changed
+    (by the recent security/permission issue)
+  - minor pod tweak
+
 0.09  2007/11/28
   - added ExtUtils::Manifest dependency
 

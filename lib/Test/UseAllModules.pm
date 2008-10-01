@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.09';
+our $VERSION = '0.09_01';
 
 use Exporter;
 
@@ -58,7 +58,7 @@ __END__
 
 =head1 NAME
 
-Test::UseAllModules - do use_ok() for all modules MANIFESTed
+Test::UseAllModules - do use_ok() for all the MANIFESTed modules
 
 =head1 SYNOPSIS
 
@@ -94,9 +94,9 @@ modify the test any more (hopefully).
 =head2 all_uses_ok
 
 Does Test::More's use_ok() for every module found in MANIFEST.
-Tests only modules under 'lib/' directory. If you have modules
-you don't want to test, give the module name(s) or regex rule
-for the argument. The word 'except' will be ignored as shown
+Tests only modules under the 'lib' directory. If you have modules
+you don't want to test, give those modules or some regex rules
+as the argument. The word 'except' will be ignored as shown
 above.
 
 =head1 NOTES
