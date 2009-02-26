@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.09_01';
+our $VERSION = '0.10';
 
 use Exporter;
 
@@ -82,33 +82,21 @@ Test::UseAllModules - do use_ok() for all the MANIFESTed modules
 
 =head1 DESCRIPTION
 
-I'm sick of writing 00_load.t (or something like that) that'll do
-use_ok() for every module I write. I'm sicker of updating 00_load.t
-when I add another file to the distro. This module reads MANIFEST to
-find modules to be tested and does use_ok() for each of them.
-Now all you have to do is updating MANIFEST. You don't have to
-modify the test any more (hopefully).
+I'm sick of writing 00_load.t (or something like that) that'll do use_ok() for every module I write. I'm sicker of updating 00_load.t when I add another file to the distro. This module reads MANIFEST to find modules to be tested and does use_ok() for each of them. Now all you have to do is update MANIFEST. You don't have to modify the test any more (hopefully).
 
 =head1 EXPORTED FUNCTIONS
 
 =head2 all_uses_ok
 
-Does Test::More's use_ok() for every module found in MANIFEST.
-Tests only modules under the 'lib' directory. If you have modules
-you don't want to test, give those modules or some regex rules
-as the argument. The word 'except' will be ignored as shown
-above.
+Does Test::More's use_ok() for every module found in MANIFEST. Tests only modules under the 'lib' directory. If you have modules you don't want to test, give those modules or some regex rules as the argument. The word 'except' will be ignored as shown above.
 
 =head1 NOTES
 
-As of 0.03, this module calls BAIL_OUT of Test::More if any of
-the use_ok tests should fail. (Thus the following tests will be
-ignored. Missing or unloadable modules cause a lot of errors of
-the same kind.)
+As of 0.03, this module calls BAIL_OUT of Test::More if any of the use_ok tests should fail. (Thus the following tests will be ignored. Missing or unloadable modules cause a lot of errors of the same kind.)
 
 =head1 SEE ALSO
 
-L<Test::More>
+There're several modules like this on the CPAN now. L<Test::Compile> and a bit confusing L<Test::LoadAllModules> try to find modules to test by traversing directories. I'm not a big fun of them as they tend to find temporary or unrelated modules as well, but they may be handier especially if you're too lazy to update MANIFEST every time.
 
 =head1 AUTHOR
 
