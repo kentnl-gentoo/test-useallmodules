@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use Exporter;
 
@@ -13,22 +13,29 @@ our @EXPORT = qw/all_uses_ok/;
 
 use Test::More;
 
-sub all_uses_ok {
-  shift if @_ && $_[0] eq 'except';
+my $RULE;
 
+sub import {
+  shift->export_to_level(1);
+
+  shift if @_ && $_[0] eq 'under';
+  my @dirs = ('lib', @_);
+  my %seen;
+  @dirs  = grep { !$seen{$_}++ } map  { s|/+$||; $_ } @dirs;
+  $RULE = '^(?:'.(join '|', @dirs).')/(.*)\.pm\s*$';
+  unshift @INC, @dirs;
+}
+
+sub _get_module_list {
+  shift if @_ && $_[0] eq 'except';
   my @exceptions = @_;
   my @modules;
-
-  unless (-f 'MANIFEST') {
-    plan skip_all => 'no MANIFEST';
-    exit;
-  }
 
   my $manifest = maniread();
 
 READ:
   foreach my $file (keys %{ $manifest }) {
-    if (my ($module) = $file =~ m|^lib/(.*)\.pm\s*$|) {
+    if (my ($module) = $file =~ m|$RULE|) {
       $module =~ s|/|::|g;
 
       foreach my $rule (@exceptions) {
@@ -38,6 +45,16 @@ READ:
       push @modules, $module;
     }
   }
+  return @modules;
+}
+
+sub all_uses_ok {
+  unless (-f 'MANIFEST') {
+    plan skip_all => 'no MANIFEST';
+    exit;
+  }
+
+  my @modules = _get_module_list(@_);
 
   unless (@modules) {
     plan skip_all => 'no .pm files are found under the lib directory';
@@ -62,16 +79,22 @@ Test::UseAllModules - do use_ok() for all the MANIFESTed modules
 
 =head1 SYNOPSIS
 
-  # basic use
+  # basic usage
   use strict;
   use Test::UseAllModules;
+  
+  BEGIN { all_uses_ok(); }
 
+  # if you also want to test modules under t/lib
+  use strict;
+  use Test::UseAllModules under => qw(lib t/lib);
+  
   BEGIN { all_uses_ok(); }
 
   # if you have modules that'll fail use_ok() for themselves
   use strict;
   use Test::UseAllModules;
-
+  
   BEGIN {
     all_uses_ok except => qw(
       Some::Dependent::Module
@@ -88,7 +111,9 @@ I'm sick of writing 00_load.t (or something like that) that'll do use_ok() for e
 
 =head2 all_uses_ok
 
-Does Test::More's use_ok() for every module found in MANIFEST. Tests only modules under the 'lib' directory. If you have modules you don't want to test, give those modules or some regex rules as the argument. The word 'except' will be ignored as shown above.
+Does Test::More's use_ok() for every module found in MANIFEST. If you have modules you don't want to test, give those modules or some regex rules as the argument. The word 'except' is ignored as shown above. 
+
+As of 0.11, you can also test modules under arbitrary directories by providing a directory list at the loading time (the word 'under' is ignored as shown above). Modules under the lib directory are always tested.
 
 =head1 NOTES
 

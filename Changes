@@ -1,5 +1,8 @@
 Revision history for Perl extension Test::UseAllModules.
 
+0.11 2009/05/08
+  - Modules under arbitrary directories can be tested now.
+
 0.10 2009/02/26
   - no significant code changes
   - updated SEE ALSO to include Test::Compile and

@@ -1,3 +1,4 @@
-package NeverTested;
+package #
+  NeverTested;
 
 1;
