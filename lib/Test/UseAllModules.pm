@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use Exporter;
 
@@ -13,7 +13,7 @@ our @EXPORT = qw/all_uses_ok/;
 
 use Test::More;
 
-my $RULE;
+my $RULE = qr{^lib/(.+)\.pm$};
 
 sub import {
   shift->export_to_level(1);
@@ -22,7 +22,7 @@ sub import {
   my @dirs = ('lib', @_);
   my %seen;
   @dirs  = grep { !$seen{$_}++ } map  { s|/+$||; $_ } @dirs;
-  $RULE = '^(?:'.(join '|', @dirs).')/(.*)\.pm\s*$';
+  $RULE = '^(?:'.(join '|', @dirs).')/(.+)\.pm\s*$';
   unshift @INC, @dirs;
 }
 
@@ -48,19 +48,21 @@ READ:
   return @modules;
 }
 
+sub _planned { Test::More->builder->{Have_Plan}; }
+
 sub all_uses_ok {
   unless (-f 'MANIFEST') {
-    plan skip_all => 'no MANIFEST';
-    exit;
+    plan skip_all => 'no MANIFEST' unless _planned();
+    return;
   }
 
   my @modules = _get_module_list(@_);
 
   unless (@modules) {
-    plan skip_all => 'no .pm files are found under the lib directory';
-    exit;
+    plan skip_all => 'no .pm files are found under the lib directory' unless _planned();
+    return;
   }
-  plan tests => scalar @modules;
+  plan tests => scalar @modules unless _planned();
 
   my @failed;
   foreach my $module (@modules) {
@@ -107,7 +109,7 @@ Test::UseAllModules - do use_ok() for all the MANIFESTed modules
 
 I'm sick of writing 00_load.t (or something like that) that'll do use_ok() for every module I write. I'm sicker of updating 00_load.t when I add another file to the distro. This module reads MANIFEST to find modules to be tested and does use_ok() for each of them. Now all you have to do is update MANIFEST. You don't have to modify the test any more (hopefully).
 
-=head1 EXPORTED FUNCTIONS
+=head1 EXPORTED FUNCTION
 
 =head2 all_uses_ok
 
@@ -115,9 +117,29 @@ Does Test::More's use_ok() for every module found in MANIFEST. If you have modul
 
 As of 0.11, you can also test modules under arbitrary directories by providing a directory list at the loading time (the word 'under' is ignored as shown above). Modules under the lib directory are always tested.
 
+=head1 PROTECTED FUNCTION
+
+=head2 _get_module_list
+
+Returns module paths to test. This function will not be exported. If you want to use this (see below), you always need to call it by the full qualified name.
+
 =head1 NOTES
 
 As of 0.03, this module calls BAIL_OUT of Test::More if any of the use_ok tests should fail. (Thus the following tests will be ignored. Missing or unloadable modules cause a lot of errors of the same kind.)
+
+As of 0.12, you can add extra tests before/after all_uses_ok() if you explicitly declare test plan like this.
+
+  use strict;
+  use warnings;
+  use Test::More;
+  use Test::UseAllModules;
+  use Test::NoWarnings;
+
+  plan tests => Test::UseAllModules::_get_module_list() + 1;
+
+  all_uses_ok();
+
+  # and extra nowarnings test
 
 =head1 SEE ALSO
 
