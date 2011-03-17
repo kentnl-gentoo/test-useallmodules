@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 use Exporter;
 
@@ -48,7 +48,13 @@ READ:
   return @modules;
 }
 
-sub _planned { Test::More->builder->{Have_Plan}; }
+sub _planned {
+  if ($Test::More::VERSION >= 2) {
+    Test::More->builder->_plan_handled;
+  } else {
+    Test::More->builder->{Have_Plan};
+  }
+}
 
 sub all_uses_ok {
   unless (-f 'MANIFEST') {
@@ -143,7 +149,7 @@ As of 0.12, you can add extra tests before/after all_uses_ok() if you explicitly
 
 =head1 SEE ALSO
 
-There're several modules like this on the CPAN now. L<Test::Compile> and a bit confusing L<Test::LoadAllModules> try to find modules to test by traversing directories. I'm not a big fun of them as they tend to find temporary or unrelated modules as well, but they may be handier especially if you're too lazy to update MANIFEST every time.
+There're several modules like this on the CPAN now. L<Test::Compile> and a bit confusing L<Test::LoadAllModules> try to find modules to test by traversing directories. I'm not a big fan of them as they tend to find temporary or unrelated modules as well, but they may be handier especially if you're too lazy to update MANIFEST every time.
 
 =head1 AUTHOR
 

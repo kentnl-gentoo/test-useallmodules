@@ -2,14 +2,17 @@ use strict;
 use warnings;
 use FindBin;
 use lib glob("$FindBin::Bin/extlib/*/lib");
+use Test::More;
 use Test::UseAllModules under => qw(lib t/lib/);
-use Test::More tests => 2;
 
 BEGIN {
   chdir 't/MANIFESTed';
-  my @modules = Test::UseAllModules::_get_module_list();
-  ok @modules == 3;
-  ok( !grep {$_ =~ /^under/} @modules );
+
+  plan tests => Test::UseAllModules::_get_module_list() + 1;
+
+  all_uses_ok();
   chdir '../..';
+
+  pass "test count should be correct";
 }
 

@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Test-UseAllModules
-version:            0.12
+version:            0.13
 abstract:           do use_ok() for all the MANIFESTed modules
 author:
     - Kenichi Ishigaki <ishigaki@cpan.org>
@@ -13,12 +13,13 @@ build_requires:
 requires:
     Exporter:            0
     ExtUtils::Manifest:  0
-    Test::More:          0
+    Test::Builder:       0.30
+    Test::More:          0.60
 no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+generated_by:       ExtUtils::MakeMaker version 6.56
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
