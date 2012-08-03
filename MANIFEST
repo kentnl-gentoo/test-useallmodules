@@ -20,4 +20,5 @@ t/MANIFESTed/t/lib/TestUseAllModulesTestTest.pm
 t/MANIFESTed/under/TestUseAllModulesUnder.pm
 t/NoMANIFEST/lib/NeverTested.pm
 t/NoPM/MANIFEST
-META.yml                                 Module meta-data (added by MakeMaker)
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)
