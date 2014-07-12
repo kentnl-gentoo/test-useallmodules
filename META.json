@@ -3,8 +3,8 @@
    "author" : [
       "Kenichi Ishigaki <ishigaki@cpan.org>"
    ],
-   "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150",
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.141520",
    "license" : [
       "perl_5"
    ],
@@ -22,23 +22,28 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : 0
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : 0
+            "ExtUtils::MakeMaker::CPANfile" : "0.06"
          }
       },
       "runtime" : {
          "requires" : {
-            "Exporter" : 0,
-            "ExtUtils::Manifest" : 0,
+            "Exporter" : "0",
+            "ExtUtils::Manifest" : "0",
             "Test::Builder" : "0.30",
             "Test::More" : "0.60"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.14"
+   "resources" : {
+      "repository" : {
+         "url" : "https://github.com/charsbar/test-useallmodules"
+      }
+   },
+   "version" : "0.15"
 }

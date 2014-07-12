@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::Manifest qw( maniread );
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 
 use Exporter;
 
@@ -49,13 +49,7 @@ READ:
 }
 
 sub _planned {
-  if ($Test::More::VERSION >= 2) {
-    Test::More->builder->_plan_handled;
-  } elsif ($Test::More::VERSION >= 1.005) {
-    Test::More->builder->history->plan;
-  } else {
-    Test::More->builder->{Have_Plan};
-  }
+  Test::More->builder->has_plan;
 }
 
 sub all_uses_ok {
