@@ -24,4 +24,4 @@ requires:
   Test::More: '0.60'
 resources:
   repository: https://github.com/charsbar/test-useallmodules
-version: '0.16'
+version: '0.17'
